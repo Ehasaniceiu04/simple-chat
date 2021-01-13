@@ -1,0 +1,44 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand text-white" routerLink="/home">Home</a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/adminpanel">Admin Panel</a>
+        </li>
+    </ul>
+    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
+</nav>
+
+<div class="container">
+    <div class="row border">
+
+        <div class="col-sm-7">
+            <h1 class="jumbotron display-4">
+                Chat Box
+            </h1>
+            <div class="card ">
+                <div class="scroll posStat">
+                    <div *ngFor="let message of messages" class="msg col-md-7 card ">{{message.user}} : {{message.message}}</div>
+                </div>
+                <hr>
+                <h4>&nbsp; Send A Message :<br> <br>
+                    <form #form="ngForm" (submit)="SendMessage()">
+                        <input type="text" name="message" [(ngModel)]="message" ng-model="message" autocomplete="off"> To :
+                        <select #selectedUser (change)="SelectedId($event.target.value)">
+                            <option [value]="0">All</option>
+                            <option *ngFor="let name of UsersFullName;let i=index" [value]="i+1">{{name}}</option>
+                            <!-- <option *ngFor="let item of usersss" >{{item.fullName}}</option> -->
+                        </select>
+
+
+                        <button type="submit" class="btn btn-dark">Send</button>
+
+                    </form>
+                </h4>
+                <br>
+            </div>
+        </div>
+        <div class="col-sm-4 ConnectedList">
+            <div class="col-md-7 card" *ngFor="let name of UsersFullName;let i=index">{{i+1}} - {{name}} </div>
+        </div>
+    </div>
+</div>

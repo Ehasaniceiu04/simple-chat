@@ -1,0 +1,159 @@
+/* You can add global styles to this file, and also import other style files */
+
+.row {
+    margin-top: 50px;
+    padding-bottom: 50px;
+}
+
+.ConnectedList {
+    /* margin-top: 250px; */
+    padding-top: 300px;
+}
+
+.posStat {
+    height: 500px;
+    padding: 10px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+}
+
+.card-header {
+    height: 100%;
+    background-color: white;
+}
+
+.card {
+    background-color: white;
+    border-radius: 10px
+}
+
+.jumbotron {
+    background-color: white;
+}
+
+.scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    scroll-behavior: auto;
+}
+
+.msg {
+    background-color: rgb(197, 194, 194);
+    margin-top: 5px;
+}
+
+body {
+    background-color: white;
+    ;
+}
+
+input.form-control,
+input.form-control:focus {
+    background-color: #636b7b;
+    color: #fff;
+    border: 1px solid #636b7b;
+}
+
+input.form-control:focus {
+    box-shadow: none;
+}
+
+button[type=submit].btn {
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+option {
+    padding-left: 10px;
+}
+
+div.form-group label:not(.text-danger) {
+    color: #545d6a;
+    font-weight: 700;
+}
+
+div.form-group.required>label:first-child:after {
+    content: '*';
+    color: #fff;
+    padding-left: 5px;
+}
+
+#toast-container>div {
+    opacity: 1;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.wrapped-div {
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    background: #2e3137;
+    padding: 30px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+/* Tabs */
+
+.tab-header {
+    text-align: center;
+}
+
+.tab-header h2.active {
+    color: #fff;
+    border-bottom: 4px solid #fff;
+}
+
+.tab-header h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    display: inline-block;
+    padding: 30px 40px 10px 40px;
+    cursor: pointer;
+    color: #545d6a;
+    border-bottom: 2px solid #545d6a;
+}
+
+.tab-header h2:focus {
+    outline: none;
+}
+
+form {
+    margin: 0px 16px;
+}
+
+div.form-group input.invalid {
+    border: 1px solid #dc3545;
+}
+
+div.form-group label:first-child {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+body,html{
+    height: 100%;
+    margin: 0;
+    background: #7F7FD5;
+   background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
