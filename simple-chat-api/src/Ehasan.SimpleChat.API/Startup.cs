@@ -1,17 +1,12 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Ehasan.SimpleChat.DependencyResolver;
 using Ehasan.SimpleChat.DataRepositories.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Ehasan.SimpleChat.Core.AppSetting;
 using System.Text;
 using Ehasan.SimpleChat.Core.Entities;
@@ -20,6 +15,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Ehasan.SimpleChat.API.Hubs;
 using Microsoft.AspNetCore.Http.Connections;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Ehasan.SimpleChat
 {
@@ -31,7 +28,9 @@ namespace Ehasan.SimpleChat
         }
 
         public IConfiguration Configuration { get; }
+        public IContainer ApplicationContainer { get; private set; }
 
+        public ILifetimeScope AutofacContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -80,8 +79,18 @@ namespace Ehasan.SimpleChat
             services.AddSignalR();
 
             services.AddControllers();
-        }
 
+            services.AddOptions();
+        }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // Register your own things directly with Autofac here. Don't
+            // call builder.Populate(), that happens in AutofacServiceProviderFactory
+            // for you.
+            builder.RegisterModule(new RepositoryAutofacModule1());
+            builder.RegisterModule(new BusinessAutofacModule1());
+           
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -101,6 +110,9 @@ namespace Ehasan.SimpleChat
              .AllowCredentials()
 
              );
+
+            // can use the convenience extension method GetAutofacRoot.
+            this.AutofacContainer = app.ApplicationServices.GetAutofacRoot();
 
             app.UseAuthorization();
 

@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Ehasan.SimpleChat.Core\Ehasan.SimpleChat.Core.csproj" />
+  </ItemGroup>
+
 </Project>

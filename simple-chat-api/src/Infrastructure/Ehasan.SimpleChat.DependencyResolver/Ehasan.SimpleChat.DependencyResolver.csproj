@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.1.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ehasan.SimpleChat.Business\Ehasan.SimpleChat.Business.csproj" />
     <ProjectReference Include="..\Ehasan.SimpleChat.DataRepositories\Ehasan.SimpleChat.DataRepositories.csproj" />
   </ItemGroup>
 

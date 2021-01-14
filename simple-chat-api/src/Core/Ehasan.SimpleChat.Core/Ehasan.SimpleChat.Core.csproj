@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Business Interface\" />
     <Folder Include="Model\" />
   </ItemGroup>
 
