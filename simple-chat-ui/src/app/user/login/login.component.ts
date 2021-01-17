@@ -1,5 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from './../../shared/user.service';
+import { UserService } from '../../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       },
       err => {
         if (err.status == 400)
-          this.toastr.error('Incorrect username or password.', 'Authentication failed.');
+          this.toastr.error('Incorrect Email.', 'Authentication failed.');
         else
           console.log(err);
       }

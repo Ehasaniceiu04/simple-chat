@@ -1,7 +1,9 @@
-import { UserService } from './../shared/user.service';
+import { UserService } from '../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { environment } from 'src/environments/environment';
+import { MessageService } from '../service/message.service';
 
 @Component({
   selector: 'app-home',
@@ -26,12 +28,18 @@ selectedUser:number =0
 usersss
 sender
 connectedUsers : any[] = []
-  constructor(private router: Router, private service: UserService) { }
+  constructor(private router: Router, private service: UserService,private messageService:MessageService) { }
 
   ngOnInit() {
-    // this.service.getUserProfile().subscribe(
-    //   res => {
-        //this.userDetails = res;
+       this.messageService.getUserReceivedMessages(this.userDetails.id).subscribe((item:any)=>{
+         if(item){
+           this.messages=item;
+           this.messages.forEach(x=>{
+            x.type=x.receiver===this.userDetails.id?'recieved':'sent';
+           })
+           console.log(this.messages);
+         }
+       })
         this.service.getAll().subscribe(
           (user:any) => {
             if(user){
@@ -51,7 +59,7 @@ connectedUsers : any[] = []
     
 
     this.message=''
-    this.hubConnection = new HubConnectionBuilder().withUrl("https://localhost:44381/chathub").build();
+    this.hubConnection = new HubConnectionBuilder().withUrl(environment.chatHubUrl).build();
     const self = this
     this.hubConnection.start()
     .then(()=>{
@@ -61,17 +69,14 @@ connectedUsers : any[] = []
 
       this.hubConnection.on("OnConnect",Usrs=>
       {
-        this.UsersConnectionId = Object.keys(Usrs).map((index) => Usrs[index].connectionId)
-        this.UsersFullName = Object.keys(Usrs).map((index) => Usrs[index].fullName)
         this.connectedUsers = Usrs;
         this.makeItOnline();
-      // this.usersss = Object.keys(Usrs).map((index) => { return {fullName:Usrs[index].fullName,connectionId:Usrs[index].connectionId}})
-       
       })
       this.hubConnection.on("OnDisconnect",Usrs=>{
-        this.UsersConnectionId = Object.keys(Usrs).map((index) => Usrs[index].connectionId)
-        this.UsersFullName = Object.keys(Usrs).map((index) => Usrs[index].fullName)  
         this.connectedUsers = Usrs;
+       this.users.forEach(item => {
+         item.isOnline=false;
+       });
         this.makeItOnline();
       })
     })
@@ -89,6 +94,11 @@ connectedUsers : any[] = []
       this.messages.push(message);
       let curentUser=this.users.find(x=>x.id===message.sender);
       this.chatUser=curentUser;
+      this.users.forEach(item=>{
+        item['isActive']=false;
+      });
+      var user=this.users.find(x=>x.id==this.chatUser.id);
+      user['isActive']=true;
       this.displayMessages=this.messages.filter(x=>(x.type==='sent' && x.receiver===this.chatUser.id) || (x.type==='recieved' && x.sender===this.chatUser.id));
     })
   }
@@ -135,7 +145,7 @@ connectedUsers : any[] = []
   }
 
   onLogout() {
-    this.hubConnection.invoke("RemoveOnlineUser",this.UserID)
+    this.hubConnection.invoke("RemoveOnlineUser",this.userDetails.id)
       .then(()=>{
         this.messages.push('User Disconnected Successfully')
       })

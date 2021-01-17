@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -9,7 +8,6 @@ using Ehasan.SimpleChat.API.Model;
 using Ehasan.SimpleChat.Core.AppSetting;
 using Ehasan.SimpleChat.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -17,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Ehasan.SimpleChat.API.Controllers
 {
+    
     [Route("api/account")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -32,13 +31,14 @@ namespace Ehasan.SimpleChat.API.Controllers
             this.appSettings = appSettings.Value;
         }
 
-        
+       
         [HttpGet]
         public IActionResult GetAll()
         {
             var result = this.userManager.Users.ToList();
             return Ok(result);
         }
+       
         [HttpPost]
         [Route("Register")]
         //POST : /api/User/Register

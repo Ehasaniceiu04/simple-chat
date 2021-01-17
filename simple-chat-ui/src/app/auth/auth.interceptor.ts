@@ -11,26 +11,51 @@ export class AuthInterceptor implements HttpInterceptor {
 
     }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    //     if (localStorage.getItem('token') != null) {
+    //         const clonedReq = req.clone({
+    //             headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+    //         });
+    //         return next.handle(clonedReq).pipe(
+    //             tap(
+    //                 succ => { },
+    //                 err => {
+    //                     if (err.status == 401){
+    //                         localStorage.removeItem('token');
+    //                         this.router.navigateByUrl('/user/login');
+    //                     }
+    //                     else if(err.status == 403)
+    //                     this.router.navigateByUrl('/forbidden');
+    //                 }
+    //             )
+    //         )
+    //     }
+    //     else
+    //         return next.handle(req.clone());
+    // }
+    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        // add authorization header with basic auth credentials if available
         if (localStorage.getItem('token') != null) {
-            const clonedReq = req.clone({
-                headers: req.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'))
-            });
-            return next.handle(clonedReq).pipe(
-                tap(
-                    succ => { },
-                    err => {
-                        if (err.status == 401){
-                            localStorage.removeItem('token');
-                            this.router.navigateByUrl('/user/login');
-                        }
-                        else if(err.status == 403)
-                        this.router.navigateByUrl('/forbidden');
-                    }
-                )
-            )
+          request = request.clone({
+            setHeaders: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          });
         }
-        else
-            return next.handle(req.clone());
+    
+        return next.handle(request).pipe(
+            tap(
+                succ => { },
+                err => {
+                    if (err.status == 401){
+                        localStorage.removeItem('token');
+                        this.router.navigateByUrl('/user/login');
+                    }
+                    else if(err.status == 403)
+                    this.router.navigateByUrl('/forbidden');
+                }
+            )
+        )
     }
+   
 }

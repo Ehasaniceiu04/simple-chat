@@ -1,0 +1,8 @@
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\bin\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.deps.json
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\bin\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.dll
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\bin\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.pdb
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\obj\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.csprojAssemblyReference.cache
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\obj\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.AssemblyInfoInputs.cache
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\obj\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.AssemblyInfo.cs
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\obj\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.dll
+F:\demo app\simple-chat\simple-chat-api\src\Tests\Ehasan.SimpleChat.API.Tests\obj\Debug\netcoreapp3.1\Ehasan.SimpleChat.API.Tests.pdb

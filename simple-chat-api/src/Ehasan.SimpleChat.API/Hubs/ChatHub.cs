@@ -1,4 +1,5 @@
-﻿using Ehasan.SimpleChat.Core.Entities;
+﻿using Ehasan.SimpleChat.Core.Business_Interface;
+using Ehasan.SimpleChat.Core.Entities;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,11 @@ namespace Ehasan.SimpleChat.API.Hubs
 {
     public class ChatHub : Hub
     {
-
+        private readonly IMessageService messageService;
+        public ChatHub(IMessageService messageService)
+        {
+            this.messageService = messageService;
+        }
         static IList<UserConnection> Users = new List<UserConnection>();
 
         public class UserConnection
@@ -24,6 +29,7 @@ namespace Ehasan.SimpleChat.API.Hubs
         {
             var reciever = Users.FirstOrDefault(x => x.UserId == message.Receiver);
             var connectionId = reciever == null ? "no one recive this message" : reciever.ConnectionId;
+            this.messageService.Add(message);
             return Clients.Client(connectionId).SendAsync("ReceiveDM", Context.ConnectionId, message);
         }
 

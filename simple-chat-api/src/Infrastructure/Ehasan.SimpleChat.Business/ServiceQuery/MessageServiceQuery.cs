@@ -28,5 +28,19 @@ namespace Ehasan.SimpleChat.Business.ServiceQuery
             }
 
         }
+        IEnumerable<Message> IMessageServiceQuery.GetReceivedMessages(string userId)
+        {
+            try
+            {
+                var messages = this.unitOfWork.Repository<Message>().Get().Where(x=>x.Receiver==userId).ToList();
+                return messages;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

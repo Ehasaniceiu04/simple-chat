@@ -81,6 +81,8 @@ namespace Ehasan.SimpleChat
             services.AddControllers();
 
             services.AddOptions();
+
+            services.AddSwaggerGen();
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
@@ -94,12 +96,18 @@ namespace Ehasan.SimpleChat
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSwagger();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+               
             }
 
+
             app.UseHttpsRedirection();
+
+          
+
 
             app.UseRouting();
 
@@ -116,6 +124,8 @@ namespace Ehasan.SimpleChat
 
             app.UseAuthorization();
 
+
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -126,6 +136,10 @@ namespace Ehasan.SimpleChat
                         HttpTransportType.LongPolling;
                 });
             });
+
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("v1/swagger.json", "Simple Chat API V1"); });
+
+
         }
     }
 }
