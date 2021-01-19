@@ -26,3 +26,17 @@ This is online chat application with Angular, ASP.NET Core, SignalR and SqlServe
 4. Run `git clone https://github.com/Ehasaniceiu04/simple-chat.git` to clone this repository
 5. Navigate to `simple-chat-ui` and run `npm install ` to install npm packages for the front end (Angular)
 6. run `npm start` to launch the front end (Angular)
+
+## Database Configuration
+
+The Application uses data-store in SQL Server.
+
+Update the **SimpleChatConnectionString** connection string within **simple-chat-api/src/Ehasan.SimpleChat.API/appsettings.json** , so that application can point to a valid SQL Server instance. 
+
+```json
+  "ConnectionStrings": {
+    "SimpleChatConnectionString": "Server=ehasan-dbms; Database=SimpleChatDb; Trusted_Connection=True; MultipleActiveResultSets=True;"
+  },
+```
+
+When you run **update-database** command, the migrations will be applied and the database will be automatically created.
