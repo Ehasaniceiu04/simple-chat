@@ -24,6 +24,5 @@ This is online chat application with Angular, ASP.NET Core, SignalR and SqlServe
 2. Install the latest [Node.js LTS](https://nodejs.org/en/)
 3. Install the latest [git](https://git-scm.com/downloads)
 4. Run `git clone https://github.com/Ehasaniceiu04/simple-chat.git` to clone this repository
-5. Run `dotnet new --install Clean.Architecture.Solution.Template` to install the project template
-6. Navigate to `simple-chat-ui` and run `npm install ` to install npm packages for the front end (Angular)
-7. run `npm start` to launch the front end (Angular)
+5. Navigate to `simple-chat-ui` and run `npm install ` to install npm packages for the front end (Angular)
+6. run `npm start` to launch the front end (Angular)
