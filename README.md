@@ -18,14 +18,13 @@ This is online chat application with Angular, ASP.NET Core, SignalR and SqlServe
 * XUnit
 * Bootstrap
 
-## Getting Started
+## Development Environment Ready (.Net Core & Angular)
 
+1. Install [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)
 1. Install the latest [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 2. Install the latest [Node.js LTS](https://nodejs.org/en/)
-3. Install the latest [git](https://git-scm.com/downloads)
-4. Run `git clone https://github.com/Ehasaniceiu04/simple-chat.git` to clone this repository
-5. Navigate to `simple-chat-ui` and run `npm install ` to install npm packages for the front end (Angular)
-6. run `npm start` to launch the front end (Angular)
+3. Run `npm install -g @angular/cli` to install latest version of angular CLI
+4. Download source code from  `https://github.com/Ehasaniceiu04/simple-chat.git` 
 
 ## Database Configuration
 
