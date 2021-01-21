@@ -18,13 +18,26 @@ This is online chat application with Angular, ASP.NET Core, SignalR and SqlServe
 * XUnit
 * Bootstrap
 
-## Development Environment Ready (.Net Core & Angular)
+## Development Environment Ready
 
-1. Install [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)
-1. Install the latest [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
-2. Install the latest [Node.js LTS](https://nodejs.org/en/)
-3. Run `npm install -g @angular/cli` to install latest version of angular CLI
-4. Download source code from  `https://github.com/Ehasaniceiu04/simple-chat.git` 
+1. Install Latest [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+2. Install [Visual Studio 2019](https://visualstudio.microsoft.com/downloads/)
+3. Install the latest [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+4. Install the latest [Node.js LTS](https://nodejs.org/en/)
+5. Run `npm install -g @angular/cli` to install latest version of angular CLI
+6. Download source code from  `https://github.com/Ehasaniceiu04/simple-chat.git` 
+
+Note: Please walkthrogh this `simple-chat/simple chat development environment preparation guidelines.docx` to know how to prepare your environment and to run this online chat application in details.
+
+## Run Front-End Application (Angular 9)
+
+1. Navigate to the workspace folder, such as `simple-chat-ui`.
+2. Open terminal window
+3. Run `npm install` to install all dependencies used in application.
+4. Run `npm start` to run chat application in browser.
+5. Browse `http://localhost:4500` to view chat app in browser
+
+Note: Please walkthrogh this `simple-chat/simple chat development environment preparation guidelines.docx` to know how to prepare your environment and to run this online chat application in details.
 
 ## Database Configuration
 
@@ -40,7 +53,7 @@ Update the **SimpleChatConnectionString** connection string within **simple-chat
 
 When you run **update-database** command, the migrations will be applied and the database will be automatically created.
 
-## Overview
+## Application Architecture
 
 ### Domain (Ehasan.SimpleChat.Core)
 
