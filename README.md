@@ -4,6 +4,7 @@ This is online chat application with Angular, ASP.NET Core, SignalR and SqlServe
  * Registered user can login with his email address. </br>
  * LoggedIn user has dashboard and from where he can see list users and he can chat with any one from the list. Chat always happen between two users. </br>
  * User can see chat history.</br>
+ * User can delete his chat history in one of two ways. He or she can delete chat data for himselft/herself or everyone.</br>
  * Application has the sign out functionality.</br></br>
 
 ## Technologies
