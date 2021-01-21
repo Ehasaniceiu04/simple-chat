@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ehasan.SimpleChat.Core.Business_Interface;
 using Ehasan.SimpleChat.Core.Business_Interface.ServiceQuery;
+using Ehasan.SimpleChat.Core.Entities;
+using Ehasan.SimpleChat.Core.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +19,11 @@ namespace Ehasan.SimpleChat.API.Controllers
     {
         
         private readonly IMessageServiceQuery messageServiceQuery;
-        public MessageController(IMessageServiceQuery messageServiceQuery)
+        private readonly IMessageService messageService;
+        public MessageController(IMessageServiceQuery messageServiceQuery,IMessageService messageService)
         {
             this.messageServiceQuery = messageServiceQuery;
+            this.messageService = messageService;
         }
         [HttpGet]
         public IActionResult GetAll()
@@ -34,6 +38,12 @@ namespace Ehasan.SimpleChat.API.Controllers
         {
             var messages = this.messageServiceQuery.GetReceivedMessages(userId);
             return Ok(messages);
+        }
+        [HttpPost()]
+        public async Task<IActionResult> DeleteMessage([FromBody]MessageDeleteModel messageDeleteModel)
+        {
+            var message=await this.messageService.DeleteMessage(messageDeleteModel);
+            return Ok(message);
         }
     }
 }

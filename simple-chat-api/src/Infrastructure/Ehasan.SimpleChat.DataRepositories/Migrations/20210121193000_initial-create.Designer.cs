@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ehasan.SimpleChat.DataRepositories.Migrations
 {
     [DbContext(typeof(SimpleChatDbContext))]
-    [Migration("20210112202238_Initial-Create")]
-    partial class InitialCreate
+    [Migration("20210121193000_initial-create")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,15 +23,19 @@ namespace Ehasan.SimpleChat.DataRepositories.Migrations
 
             modelBuilder.Entity("Ehasan.SimpleChat.Core.Entities.Message", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsNew")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReceiverDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSenderDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("MessageDate")

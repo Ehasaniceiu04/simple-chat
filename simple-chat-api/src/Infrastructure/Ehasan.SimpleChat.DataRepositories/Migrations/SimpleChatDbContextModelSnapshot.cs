@@ -21,15 +21,19 @@ namespace Ehasan.SimpleChat.DataRepositories.Migrations
 
             modelBuilder.Entity("Ehasan.SimpleChat.Core.Entities.Message", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsNew")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsReceiverDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSenderDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("MessageDate")

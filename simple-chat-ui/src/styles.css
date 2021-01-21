@@ -21,7 +21,6 @@
 }
 
 .card-header {
-    height: 100%;
     background-color: white;
 }
 
@@ -46,27 +45,25 @@
 }
 
 body {
-    background-color: white;
-    ;
+    background-color: #f9f9f9;
+
 }
 
 input.form-control,
 input.form-control:focus {
-    background-color: #636b7b;
-    color: #fff;
-    border: 1px solid #636b7b;
+    /* background-color: #636b7b; */
+    /* color: #fff; */
+    /* border: 1px solid #636b7b; */
 }
 
 input.form-control:focus {
     box-shadow: none;
 }
 
-button[type=submit].btn {
+.btn-round {
     border-radius: 20px;
-    background-color: white;
-    color: black;
     margin-bottom: 10px;
-    margin-left: 10px;
+    cursor: pointer;
 }
 
 option {
@@ -100,14 +97,14 @@ div.form-group.required>label:first-child:after {
 .wrapped-div {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
-    background: #2e3137;
+    background: #f0f4f8;
     padding: 30px;
     width: 90%;
     max-width: 450px;
     position: relative;
     padding: 0px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
-    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
 }
 
 
@@ -118,8 +115,8 @@ div.form-group.required>label:first-child:after {
 }
 
 .tab-header h2.active {
-    color: #fff;
-    border-bottom: 4px solid #fff;
+    color: #0d6efd;
+    border-color: #0d6efd;
 }
 
 .tab-header h2 {
@@ -150,10 +147,11 @@ div.form-group label:first-child {
     font-size: 0.9rem;
 }
 
-body,html{
+body,
+html {
     height: 100%;
     margin: 0;
-    background: #7F7FD5;
+    /* background: #7F7FD5;
    background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
-    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); */
 }

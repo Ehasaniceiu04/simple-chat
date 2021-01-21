@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ehasan.SimpleChat.DataRepositories.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,13 +54,14 @@ namespace Ehasan.SimpleChat.DataRepositories.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Sender = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Receiver = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MessageDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsNew = table.Column<bool>(type: "bit", nullable: false)
+                    IsNew = table.Column<bool>(type: "bit", nullable: false),
+                    IsSenderDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsReceiverDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

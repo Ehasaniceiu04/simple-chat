@@ -1,55 +1,60 @@
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand text-white">Home</a>
-    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
-</nav>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-4 col-xl-3 chat">
             <div class="card mb-sm-3 mb-md-0 contacts_card">
-            <div class="card-header">
-                <ul class="contacts">
-                    <li class="active">
-                        <div class="d-flex bd-highlight">
-                            <div class="img_cont">
-                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                                <span class="online_icon"></span>
+                <div class="card-header">
+
+                    <ul class="contacts">
+                        <li class="">
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>{{userDetails.firstName}} {{userDetails.lastName}}</span>
+                                    <p>{{userDetails.email}}</p>
+                                </div>
                             </div>
-                            <div class="user_info">
-                                <span>{{userDetails.firstName}} {{userDetails.lastName}}</span>
-                                <p>{{userDetails.email}}</p>
+                            <div class="dropdownIcon">
+                                <i class="fa fa-ellipsis-h fa-pull-right" aria-hidden="true" (click)="showMenuList()"></i>
+                                <ul class="menuList" *ngIf="menuList">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" style="cursor: pointer;" (click)="onLogout()">Logout</a></li>
+                                </ul>
                             </div>
+                        </li>
+                    </ul>
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..." name="" class="form-control search">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                         </div>
-                    </li>
-                </ul>
-                <div class="input-group">
-                    <input type="text" placeholder="Search..." name="" class="form-control search">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                     </div>
                 </div>
-            </div>
-            <div class="card-body contacts_body">
-                <ul class="contacts">
-                <li style="cursor: pointer;" [class.active]="item.isActive" *ngFor="let item of users"  (click)="openChat(item)">
-                    <div class="d-flex bd-highlight">
-                        <div class="img_cont">
-                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                            <span class="online_icon" [class.offline]="!item.isOnline"></span>
-                        </div>
-                        <div class="user_info">
-                            <span>{{item.firstName}} {{item.lastName}}</span>
-                           
-                        </div>
-                    </div>
-                </li>
+                <div class="card-body contacts_body">
+                    <ul class="contacts">
+                        <li style="cursor: pointer;" [class.active]="item.isActive" *ngFor="let item of users" (click)="openChat(item)">
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                                    <span class="online_icon" [class.offline]="!item.isOnline"></span>
+                                </div>
+                                <div class="user_info">
+                                    <span>{{item.firstName}} {{item.lastName}}</span>
 
-                </ul>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- <div class="card-footer"></div> -->
             </div>
-            <div class="card-footer"></div>
-        </div></div>
+        </div>
         <div class="col-md-8 col-xl-6 chat">
             <div class="card">
-                <div class="card-header msg_head " style="background-color: rosybrown">
+                <div class="card-header msg_head ">
                     <div class="d-flex bd-highlight">
                         <div class="img_cont">
                             <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
@@ -57,35 +62,49 @@
                         </div>
                         <div class="user_info">
                             <span>Chat with {{chatUser?.firstName}} {{chatUser?.lastName}}</span>
-                           
-                        </div>
-                        <div class="video_cam">
-                            <span><i class="fas fa-video"></i></span>
-                            <span><i class="fas fa-phone"></i></span>
                         </div>
                     </div>
                 </div>
                 <div class="card-body msg_card_body">
                     <div *ngFor="let m of displayMessages">
-                    <div class="d-flex justify-content-start mb-4" *ngIf="m.type==='recieved'">
-                        <div class="img_cont_msg">
-                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                        <div class="messageItem" (click)="visibleRemoveContextMenu(m)">
+                            <section>
+                                <i *ngIf="m.type==='recieved'" class="fa fa-ellipsis-h messageListIcon" aria-hidden="true" style="display: none;"></i>
+                                <ul class="userList" *ngIf="m.type==='recieved' && isContextMenuVisible && m.id===selectedId">
+                                    <li><a class="dropdown-item mouseCursor" (click)="deleteMessage(m,'DeleteForMe',false)">Remove Only For Me</a></li>
+                                </ul>
+                            </section>
+                            <div class="d-flex justify-content-start mb-4" *ngIf="m.type==='recieved' && !m.isReceiverDeleted">
+                                <div class="img_cont_msg">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                </div>
+                                <div class="msg_cotainer">
+                                    {{m.content}}
+                                    <span class="msg_time">8:40 AM, Today</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="msg_cotainer">
-                           {{m.content}}
-                            <span class="msg_time">8:40 AM, Today</span>
+                        <div class="messageItem" (click)="visibleRemoveContextMenu(m)">
+                            <section>
+                                <i *ngIf="m.type==='sent'" class="fa fa-ellipsis-h messageListIcon" aria-hidden="true" style="display: none;"></i>
+                                <ul class="userList" *ngIf="m.type==='sent' && isContextMenuVisible && m.id===selectedId">
+                                    <li><a class="dropdown-item mouseCursor" (click)="deleteMessage(m,'DeleteForMe',true)">Remove Only For Me</a></li>
+                                    <li><a class="dropdown-item mouseCursor" (click)="deleteMessage(m,'DeleteForEveryone',true)">Remove For Everyone</a></li>
+                                </ul>
+                            </section>
+
+                            <div class="d-flex justify-content-end mb-4" *ngIf="m.type==='sent' && !m.isSenderDeleted">
+                                <div class="msg_cotainer_send">
+                                    {{m.content}}
+                                    <span class="msg_time_send">8:55 AM, Today</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                </div>
+                            </div>
                         </div>
+
                     </div>
-                    <div class="d-flex justify-content-end mb-4" *ngIf="m.type==='sent'">
-                        <div class="msg_cotainer_send">
-                            {{m.content}}
-                            <span class="msg_time_send">8:55 AM, Today</span>
-                        </div>
-                        <div class="img_cont_msg">
-                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
-                        </div>
-                    </div>
-                </div>
                 </div>
                 <div class="card-footer">
                     <div class="input-group">
