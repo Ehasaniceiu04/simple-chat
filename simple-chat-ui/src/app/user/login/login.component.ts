@@ -22,18 +22,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.service.login(form.value).subscribe(
-      (res: any) => {
-        localStorage.setItem('token', res.token);
+    var res=this.service.getToken();
+    localStorage.setItem('token', res.token);
         localStorage.setItem('login-user', JSON.stringify(res.user));
         this.router.navigateByUrl('/home');
-      },
-      err => {
-        if (err.status == 400)
-          this.toastr.error('Incorrect Email.', 'Authentication failed.');
-        else
-          console.log(err);
-      }
-    );
+    // this.service.login(form.value).subscribe(
+    //   (res: any) => {
+    //     localStorage.setItem('token', res.token);
+    //     localStorage.setItem('login-user', JSON.stringify(res.user));
+    //     this.router.navigateByUrl('/home');
+    //   },
+    //   err => {
+    //     if (err.status == 400)
+    //       this.toastr.error('Incorrect Email.', 'Authentication failed.');
+    //     else
+    //       console.log(err);
+    //   }
+    // );
   }
 }

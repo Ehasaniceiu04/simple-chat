@@ -31,29 +31,39 @@ connectedUsers : any[] = []
   constructor(private router: Router, private service: UserService,private messageService:MessageService) { }
 
   ngOnInit() {
-       this.messageService.getUserReceivedMessages(this.userDetails.id).subscribe((item:any)=>{
-         if(item){
-           this.messages=item;
-           this.messages.forEach(x=>{
-            x.type=x.receiver===this.userDetails.id?'recieved':'sent';
-           })
-           console.log(this.messages);
-         }
-       })
-        this.service.getAll().subscribe(
-          (user:any) => {
-            if(user){
-            this.users=user.filter(x=>x.email!==this.userDetails.email);
-            this.users.forEach(item=>{
-              item['isActive']=false;
-            })
-            this.makeItOnline();
-            }
-          },
-          err => {
-            console.log(err);
-          },
-        );
+      //  this.messageService.getUserReceivedMessages(this.userDetails.id).subscribe((item:any)=>{
+      //    if(item){
+      //      this.messages=item;
+      //      this.messages.forEach(x=>{
+      //       x.type=x.receiver===this.userDetails.id?'recieved':'sent';
+      //      })
+      //      console.log(this.messages);
+      //    }
+      //  })
+      this.messages=this.messageService.getTempMessageData();
+      this.messages.forEach(x=>{
+              x.type=x.receiver===this.userDetails.id?'recieved':'sent';
+             })
+           var user=this.messageService.getTempData();
+             this.users=user.filter(x=>x.email!==this.userDetails.email);
+             this.users.forEach(item=>{
+               item['isActive']=false;
+             })
+             this.makeItOnline();
+        // this.service.getAll().subscribe(
+        //   (user:any) => {
+        //     if(user){
+        //     this.users=user.filter(x=>x.email!==this.userDetails.email);
+        //     this.users.forEach(item=>{
+        //       item['isActive']=false;
+        //     })
+        //     this.makeItOnline();
+        //     }
+        //   },
+        //   err => {
+        //     console.log(err);
+        //   },
+        // );
    
    
     
