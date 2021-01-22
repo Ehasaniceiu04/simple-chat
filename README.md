@@ -17,6 +17,8 @@ This is online chat application with Angular, ASP.NET Core, SignalR and SqlServe
 * Autofac
 * Moq
 * XUnit
+* xunit.runner.visualstudio
+* FluentAssertions
 * Bootstrap
 
 ## Development Environment Ready
