@@ -12,33 +12,26 @@ import { Guid } from 'guid-typescript';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  menuList: boolean = false;
-  isContextMenuVisible: boolean = false;
-  userDetails = JSON.parse(localStorage.getItem("login-user"))
-  users;
-  chatUser;
+
+  loggedInUser = JSON.parse(localStorage.getItem("login-user"))
+  users:any;
+  chatUser:any;
 
   messages: any[] = [];
   displayMessages: any[] = []
   message: string
   hubConnection: HubConnection;
 
-  UserID = this.service.UserID;
-  UserConnectionID
-  UsersFullName
-  UsersConnectionId
-  selectedUser: number = 0
-  usersss
-  sender
+ 
   connectedUsers: any[] = []
   constructor(private router: Router, private service: UserService, private messageService: MessageService) { }
 
   ngOnInit() {
-     this.messageService.getUserReceivedMessages(this.userDetails.id).subscribe((item:any)=>{
+     this.messageService.getUserReceivedMessages(this.loggedInUser.id).subscribe((item:any)=>{
        if(item){
          this.messages=item;
          this.messages.forEach(x=>{
-          x.type=x.receiver===this.userDetails.id?'recieved':'sent';
+          x.type=x.receiver===this.loggedInUser.id?'recieved':'sent';
          })
          console.log(this.messages);
        }
@@ -47,7 +40,7 @@ export class HomeComponent implements OnInit {
     this.service.getAll().subscribe(
       (user:any) => {
         if(user){
-        this.users=user.filter(x=>x.email!==this.userDetails.email);
+        this.users=user.filter(x=>x.email!==this.loggedInUser.email);
         this.users.forEach(item=>{
           item['isActive']=false;
         })
@@ -67,15 +60,15 @@ export class HomeComponent implements OnInit {
     const self = this
     this.hubConnection.start()
       .then(() => {
-        self.hubConnection.invoke("OnConnect", this.userDetails.id, this.userDetails.firstName, this.userDetails.userName)
+        self.hubConnection.invoke("PublishUserOnConnect", this.loggedInUser.id, this.loggedInUser.firstName, this.loggedInUser.userName)
           .then(() => console.log('User Sent Successfully'))
           .catch(err => console.error(err));
 
-        this.hubConnection.on("OnConnect", Usrs => {
+        this.hubConnection.on("BroadcastUserOnConnect", Usrs => {
           this.connectedUsers = Usrs;
           this.makeItOnline();
         })
-        this.hubConnection.on("OnDisconnect", Usrs => {
+        this.hubConnection.on("BroadcastUserOnDisconnect", Usrs => {
           this.connectedUsers = Usrs;
           this.users.forEach(item => {
             item.isOnline = false;
@@ -85,7 +78,7 @@ export class HomeComponent implements OnInit {
       })
       .catch(err => console.log(err));
 
-    this.hubConnection.on("UserConnected", (connectionId) => this.UserConnectionID = connectionId);
+    // this.hubConnection.on("UserConnected", (connectionId) => this.UserConnectionID = connectionId);
 
     this.hubConnection.on('BroadCastDeleteMessage', (connectionId, message) => {
      let deletedMessage=this.messages.find(x=>x.id===message.id);
@@ -116,11 +109,10 @@ export class HomeComponent implements OnInit {
 
   SendDirectMessage() {
     if (this.message != '' && this.message.trim() != '') {
-      var connectedUser = this.connectedUsers.find(x => x.username === this.chatUser.userName);
       let guid=Guid.create();
       var msg = {
         id:guid.toString(),
-        sender: this.userDetails.id,
+        sender: this.loggedInUser.id,
         receiver: this.chatUser.id,
         messageDate: new Date(),
         type: 'sent',
@@ -159,21 +151,17 @@ export class HomeComponent implements OnInit {
     let deleteMessage={
       'deleteType':deleteType,
       'message':message,
-      'deletedUserId':this.userDetails.id
+      'deletedUserId':this.loggedInUser.id
     }
     this.hubConnection.invoke('DeleteMessage', deleteMessage)
-        .then(() => console.log('Message to user Sent Successfully'))
+        .then(() => console.log('publish delete request'))
         .catch(err => console.error(err));
     message.isSenderDeleted=isSender;
     message.isReceiverDeleted=!isSender;
-    // this.messageService.deleteMessage(deleteMessage).subscribe((result:any)=>{
-    //    message.isSenderDeleted=result.isSenderDeleted;
-    //    message.isReceiverDeleted=result.isReceiverDeleted;
-    // })
   }
 
   onLogout() {
-    this.hubConnection.invoke("RemoveOnlineUser", this.userDetails.id)
+    this.hubConnection.invoke("RemoveOnlineUser", this.loggedInUser.id)
       .then(() => {
         this.messages.push('User Disconnected Successfully')
       })
@@ -182,13 +170,6 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/user/login']);
   }
 
-  showMenuList() {
-    this.menuList = !this.menuList;
-  }
-  selectedId: string;
-  visibleRemoveContextMenu(message) {
-    this.selectedId = message.id;
-    this.isContextMenuVisible = !this.isContextMenuVisible;
-  }
+  
 
 }

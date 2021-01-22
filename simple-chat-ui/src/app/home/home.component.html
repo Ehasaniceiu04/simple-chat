@@ -12,13 +12,13 @@
                                     <span class="online_icon"></span>
                                 </div>
                                 <div class="user_info">
-                                    <span>{{userDetails.firstName}} {{userDetails.lastName}}</span>
-                                    <p>{{userDetails.email}}</p>
+                                    <span>{{loggedInUser.firstName}} {{loggedInUser.lastName}}</span>
+                                    <p>{{loggedInUser.email}}</p>
                                 </div>
                             </div>
                             <div class="dropdownIcon">
-                                <i class="fa fa-ellipsis-h fa-pull-right" aria-hidden="true" (click)="showMenuList()"></i>
-                                <ul class="menuList" *ngIf="menuList">
+                                <i class="fa fa-ellipsis-h fa-pull-right" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                <ul class="dropdown-menu dropdown-menu-right menuList" aria-labelledby="dropdownMenuButton">
                                     <li><a class="dropdown-item" href="#">My Profile</a></li>
                                     <li><a class="dropdown-item" style="cursor: pointer;" (click)="onLogout()">Logout</a></li>
                                 </ul>
@@ -67,10 +67,10 @@
                 </div>
                 <div class="card-body msg_card_body">
                     <div *ngFor="let m of displayMessages">
-                        <div class="messageItem" (click)="visibleRemoveContextMenu(m)">
+                        <div class="messageItem">
                             <section>
-                                <i *ngIf="m.type==='recieved'" class="fa fa-ellipsis-h messageListIcon" aria-hidden="true" style="display: none;"></i>
-                                <ul class="userList" *ngIf="m.type==='recieved' && isContextMenuVisible && m.id===selectedId">
+                                <i *ngIf="m.type==='recieved'" class="fa fa-ellipsis-h messageListIcon" aria-hidden="true" style="display: none;" id="{{m.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                <ul class="dropdown-menu userList" aria-labelledby="{{m.id}}">
                                     <li><a class="dropdown-item mouseCursor" (click)="deleteMessage(m,'DeleteForMe',false)">Remove Only For Me</a></li>
                                 </ul>
                             </section>
@@ -84,10 +84,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="messageItem" (click)="visibleRemoveContextMenu(m)">
+                        <div class="messageItem">
                             <section>
-                                <i *ngIf="m.type==='sent'" class="fa fa-ellipsis-h messageListIcon" aria-hidden="true" style="display: none;"></i>
-                                <ul class="userList" *ngIf="m.type==='sent' && isContextMenuVisible && m.id===selectedId">
+                                <i *ngIf="m.type==='sent'" class="fa fa-ellipsis-h messageListIcon" aria-hidden="true" style="display: none;" id="{{m.id}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                                <ul class="dropdown-menu userList" aria-labelledby="{{m.id}}">
                                     <li><a class="dropdown-item mouseCursor" (click)="deleteMessage(m,'DeleteForMe',true)">Remove Only For Me</a></li>
                                     <li><a class="dropdown-item mouseCursor" (click)="deleteMessage(m,'DeleteForEveryone',true)">Remove For Everyone</a></li>
                                 </ul>

@@ -29,7 +29,7 @@ namespace Ehasan.SimpleChat.API.Hubs
         public Task SendMessageToUser(Message message)
         {
             var reciever = Users.FirstOrDefault(x => x.UserId == message.Receiver);
-            var connectionId = reciever == null ? "no one recive this message" : reciever.ConnectionId;
+            var connectionId = reciever == null ? "offlineUser" : reciever.ConnectionId;
             this.messageService.Add(message);
             return Clients.Client(connectionId).SendAsync("ReceiveDM", Context.ConnectionId, message);
         }
@@ -40,7 +40,7 @@ namespace Ehasan.SimpleChat.API.Hubs
             await Clients.All.SendAsync("BroadCastDeleteMessage", Context.ConnectionId, deletedMessage);
         }
 
-        public async Task OnConnect(string id, string fullname, string username)
+        public async Task PublishUserOnConnect(string id, string fullname, string username)
         {
 
             var existingUser = Users.FirstOrDefault(x => x.Username == username);
@@ -64,15 +64,15 @@ namespace Ehasan.SimpleChat.API.Hubs
                 Users[indexExistingUser] = user;
             }
 
-            await Clients.All.SendAsync("OnConnect", Users);
+            await Clients.All.SendAsync("BroadcastUserOnConnect", Users);
 
         }
 
-        public override async Task OnConnectedAsync()
-        {
-            await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
-            await base.OnConnectedAsync();
-        }
+        //public override async Task OnConnectedAsync()
+        //{
+        //    await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
+        //    await base.OnConnectedAsync();
+        //}
 
         public void RemoveOnlineUser(string userID)
         {
@@ -80,7 +80,7 @@ namespace Ehasan.SimpleChat.API.Hubs
             foreach (UserConnection i in user)
                 Users.Remove(i);
 
-            Clients.All.SendAsync("OnDisconnect", Users);
+            Clients.All.SendAsync("BroadcastUserOnDisconnect", Users);
         }
     }
 }
