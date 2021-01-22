@@ -68,12 +68,6 @@ namespace Ehasan.SimpleChat.API.Hubs
 
         }
 
-        //public override async Task OnConnectedAsync()
-        //{
-        //    await Clients.All.SendAsync("UserConnected", Context.ConnectionId);
-        //    await base.OnConnectedAsync();
-        //}
-
         public void RemoveOnlineUser(string userID)
         {
             var user = Users.Where(x => x.UserId == userID).ToList();
